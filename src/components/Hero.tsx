@@ -10,7 +10,7 @@ const features = [
 export default function Hero() {
   return (
     <section className="border-b-4 border-ink bg-paper">
-      <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 py-16 sm:py-24 lg:grid-cols-2 lg:gap-16">
+      <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 py-16 sm:py-24 lg:grid-cols-[5fr_6fr] lg:gap-16">
         <div>
           <span className="inline-block border-4 border-ink bg-web px-4 py-1.5 font-mono text-xs font-bold uppercase tracking-widest text-ink shadow-brutal-sm">
             New Collection · 2026
@@ -46,16 +46,16 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="relative aspect-square w-full border-4 border-ink bg-white shadow-brutal-lg">
+        <div className="relative mx-auto aspect-square w-full max-w-xl lg:max-w-none lg:-mr-6 lg:scale-110">
           <Image
             src="https://static.wikia.nocookie.net/thedailybugle/images/2/2b/Ultimate_Spider_Man_Render.png/revision/latest/scale-to-width-down/1200?cb=20160319202253"
             alt="Ultimate Spider-Man swinging on a web line and shooting a web"
             fill
             priority
-            sizes="(max-width: 1024px) 100vw, 600px"
-            className="object-contain p-2"
+            sizes="(max-width: 1024px) 100vw, 760px"
+            className="object-contain"
           />
-          <span className="absolute -bottom-4 -left-4 rotate-2 border-4 border-ink bg-ink px-4 py-1.5 font-mono text-xs font-bold uppercase tracking-widest text-paper">
+          <span className="absolute bottom-0 left-0 -rotate-2 border-4 border-ink bg-ink px-4 py-1.5 font-mono text-xs font-bold uppercase tracking-widest text-paper shadow-brutal-sm">
             Amazing · Est. 2026
           </span>
         </div>
