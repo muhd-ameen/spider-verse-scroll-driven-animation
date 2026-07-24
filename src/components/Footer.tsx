@@ -44,6 +44,14 @@ export default function Footer() {
         <div className="mt-16 flex flex-col gap-2 border-t-4 border-paper/20 pt-6 font-mono text-xs uppercase tracking-widest text-paper/60 sm:flex-row sm:items-center sm:justify-between">
           <span>© 2026 SpiderVerse Store</span>
           <span>Not affiliated with Marvel · Fan concept</span>
+          <a
+            href="https://linktr.ee/emeenx"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-bold text-paper transition-colors hover:text-spider focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-web focus-visible:ring-offset-2 focus-visible:ring-offset-ink"
+          >
+            emeenx ↗
+          </a>
         </div>
       </div>
     </footer>
