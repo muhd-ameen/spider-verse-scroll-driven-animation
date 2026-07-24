@@ -17,9 +17,9 @@ interface HeroSequenceProps {
  * A scroll-scrubbed canvas image sequence that plays as a cinematic intro.
  *
  * The frames render onto a single fixed, full-viewport <canvas> that overlays
- * the entire page — so the ticker and nav stay hidden while the animation runs.
+ * the entire page, so the ticker and nav stay hidden while the animation runs.
  * When the sequence ends the overlay fades out, revealing the ticker, nav and
- * hero together. No <video>, no swapped <img> elements — one canvas.
+ * hero together. No <video>, no swapped <img> elements, just one canvas.
  *
  * Render this immediately before the normal page content; its spacer provides
  * the scroll distance the intro scrubs across.
@@ -65,7 +65,7 @@ export default function HeroSequence({
           aria-hidden="true"
         />
 
-        {/* Scroll hint — fades out as soon as the user starts scrubbing. */}
+        {/* Scroll hint, fades out as soon as the user starts scrubbing. */}
         <div
           ref={overlayRef}
           className="pointer-events-none absolute inset-x-0 bottom-8 z-10 flex flex-col items-center gap-2"
@@ -78,7 +78,7 @@ export default function HeroSequence({
           </span>
         </div>
 
-        {/* Preloader — sits above the canvas until the first frame decodes. */}
+        {/* Preloader sits above the canvas until the first frame decodes. */}
         <div
           className={`absolute inset-0 z-20 flex flex-col items-center justify-center gap-4 bg-ink transition-opacity duration-500 ${
             isReady ? "pointer-events-none opacity-0" : "opacity-100"

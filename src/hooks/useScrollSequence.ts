@@ -34,7 +34,7 @@ export interface ScrollSequenceOptions {
  * The canvas lives in a fixed, full-viewport layer that sits *above* the rest
  * of the page (nav included) during the intro, so nothing but the animation is
  * visible. Scroll maps to a frame index; only integer frame changes repaint.
- * Near the end the whole layer fades out, revealing the real page beneath — a
+ * Near the end the whole layer fades out, revealing the real page beneath, a
  * clean crossfade from the final frame to the hero.
  *
  *   - reads scroll progress from an empty spacer (no pinning needed)
@@ -114,7 +114,7 @@ export function useScrollSequence({
       const rect = canvasLayer.getBoundingClientRect();
       cssWidth = rect.width;
       cssHeight = rect.height;
-      // Cap DPR at 2 — beyond that the extra pixels cost more than they show.
+      // Cap DPR at 2. Beyond that the extra pixels cost more than they show.
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       canvas.width = Math.round(cssWidth * dpr);
       canvas.height = Math.round(cssHeight * dpr);

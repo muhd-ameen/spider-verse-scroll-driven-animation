@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Spider">
+  <rect width="32" height="32" fill="#0a0a0a" />
+  <g fill="none" stroke="#e5121f" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="16,15 11,11 6,12" />
+    <polyline points="16,16 10,15 5,17" />
+    <polyline points="16,18 10,19 6,23" />
+    <polyline points="16,19 11,22 8,26" />
+    <polyline points="16,15 21,11 26,12" />
+    <polyline points="16,16 22,15 27,17" />
+    <polyline points="16,18 22,19 26,23" />
+    <polyline points="16,19 21,22 24,26" />
+  </g>
+  <g fill="#e5121f">
+    <circle cx="16" cy="12.8" r="2.3" />
+    <ellipse cx="16" cy="18.6" rx="3" ry="4.3" />
+  </g>
+</svg>

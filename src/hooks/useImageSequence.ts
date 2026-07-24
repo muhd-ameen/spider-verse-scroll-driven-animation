@@ -30,7 +30,7 @@ export interface ImageSequence {
  * frame-by-frame on a canvas without any per-frame network requests.
  *
  * The elements live in a ref (never state) so redrawing a frame does not
- * trigger a React render — the scroll handler reads straight from `images`.
+ * trigger a React render. The scroll handler reads straight from `images`.
  */
 export function useImageSequence(
   totalFrames: number,

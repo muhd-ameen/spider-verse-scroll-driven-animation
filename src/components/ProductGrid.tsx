@@ -21,7 +21,7 @@ export default function ProductGrid() {
         {products.length === 0 ? (
           <div className="mt-16 border-4 border-dashed border-ink p-12 text-center">
             <p className="font-mono text-sm font-bold uppercase tracking-widest text-ink">
-              The web is empty — no gear in stock yet.
+              The web is empty. No gear in stock yet.
             </p>
             <a
               href="#"
