@@ -48,8 +48,8 @@ export default function Hero() {
 
         <div className="relative mx-auto aspect-square w-full max-w-xl lg:max-w-none lg:-mr-6 lg:scale-110">
           <Image
-            src="https://static.wikia.nocookie.net/thedailybugle/images/2/2b/Ultimate_Spider_Man_Render.png/revision/latest/scale-to-width-down/1200?cb=20160319202253"
-            alt="Ultimate Spider-Man swinging on a web line and shooting a web"
+            src="/hero.png"
+            alt="Hooded figure in a red cape and armor, seen from behind"
             fill
             priority
             sizes="(max-width: 1024px) 100vw, 760px"

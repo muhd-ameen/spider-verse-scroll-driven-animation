@@ -7,10 +7,6 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "prod-img.thesouledstore.com",
       },
-      {
-        protocol: "https",
-        hostname: "static.wikia.nocookie.net",
-      },
     ],
   },
 };
