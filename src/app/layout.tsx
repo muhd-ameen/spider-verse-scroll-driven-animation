@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, Space_Mono } from "next/font/google";
 import "./globals.css";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://x.avocadonation.xyz";
+const siteUrl = "https://x.avocadonation.xyz";
 
 const display = Space_Grotesk({
   subsets: ["latin"],
