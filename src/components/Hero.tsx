@@ -16,7 +16,7 @@ export default function Hero() {
             New Collection · 2026
           </span>
 
-          <h1 className="mt-8 font-display text-6xl font-bold uppercase leading-[0.9] tracking-tighter sm:text-7xl">
+          <h1 className="misprint mt-8 font-display text-6xl font-bold uppercase leading-[0.9] tracking-tighter sm:text-7xl">
             Suit up
             <br />
             like a{" "}
@@ -66,7 +66,7 @@ export default function Hero() {
         <dl className="grid grid-cols-2 gap-1 lg:grid-cols-4">
           {features.map((feature) => (
             <div key={feature.label} className="bg-paper p-6 sm:p-8">
-              <dt className="font-display text-3xl font-bold uppercase tracking-tighter text-spider sm:text-4xl">
+              <dt className="misprint font-display text-3xl font-bold uppercase tracking-tighter text-spider sm:text-4xl">
                 {feature.k}
               </dt>
               <dd className="mt-1 font-mono text-xs font-bold uppercase tracking-widest text-ink">

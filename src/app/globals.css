@@ -2,6 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+/**
+ * Universe A — the printed page. MultiverseShift tweens these live as you
+ * scroll into the CTA, so nothing in the app may hardcode a colour.
+ */
+:root {
+  --ink: 10 10 10;
+  --paper: 244 241 233;
+  --spider: 229 18 31;
+  --electric: 27 60 255;
+  --web: 245 217 10;
+
+  /* Print plates. Display type is struck slightly off-register in cyan and
+     magenta; MultiverseShift widens the gap as the palette crosses over. */
+  --cyan: 0 174 239;
+  --magenta: 236 0 140;
+  --misreg: 1.5px;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -10,7 +28,40 @@ body {
   @apply bg-paper text-ink antialiased;
 }
 
+/* Paper tooth: one fixed, non-interactive grain layer over the whole document,
+   so the canvas intro and the page below are printed on the same stock. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0.42;
+  mix-blend-mode: soft-light;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23g)' opacity='0.55'/%3E%3C/svg%3E");
+}
+
 @layer utilities {
+  /* Four-colour press that never quite lines up. Only worth it on large
+     display type — at body sizes the ghosts read as blur, not as print. */
+  .misprint {
+    text-shadow:
+      calc(var(--misreg) * -1) 0 0 rgb(var(--cyan) / 0.5),
+      var(--misreg) 0 0 rgb(var(--magenta) / 0.42);
+  }
+
+  /* Ben-Day dot screen. Needs a positioned parent and content above z-0. */
+  .benday::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image: radial-gradient(rgb(var(--ink)) 1.1px, transparent 1.2px);
+    background-size: 7px 7px;
+    opacity: 0.16;
+  }
+
   /* Seamless ticker: two identical halves, slide by -50%. */
   .marquee {
     animation: marquee 24s linear infinite;

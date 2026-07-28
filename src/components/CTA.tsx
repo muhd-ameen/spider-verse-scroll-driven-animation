@@ -1,8 +1,11 @@
 export default function CTA() {
   return (
-    <section className="border-b-4 border-ink bg-electric">
-      <div className="mx-auto max-w-4xl px-6 py-24 text-center">
-        <h2 className="font-display text-4xl font-bold uppercase leading-[0.95] tracking-tighter text-paper sm:text-6xl">
+    <section
+      id="crossing"
+      className="benday relative overflow-hidden border-b-4 border-ink bg-electric"
+    >
+      <div className="relative z-10 mx-auto max-w-4xl px-6 py-24 text-center">
+        <h2 className="misprint font-display text-4xl font-bold uppercase leading-[0.95] tracking-tighter text-paper sm:text-6xl">
           Become your friendly
           <br />
           neighborhood hero

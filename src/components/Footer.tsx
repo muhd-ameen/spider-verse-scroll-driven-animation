@@ -10,7 +10,7 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-6 py-16">
         <div className="grid gap-12 lg:grid-cols-[2fr_3fr]">
           <div>
-            <p className="font-display text-4xl font-bold uppercase tracking-tighter sm:text-5xl">
+            <p className="misprint font-display text-4xl font-bold uppercase tracking-tighter sm:text-5xl">
               Spider<span className="text-spider">//</span>Verse
             </p>
             <p className="mt-4 max-w-sm font-mono text-sm leading-relaxed text-paper/70">

@@ -8,7 +8,7 @@ export default function ProductGrid() {
     <section id="products" className="border-b-4 border-ink bg-paper">
       <div className="mx-auto max-w-7xl px-6 py-20">
         <div className="flex flex-wrap items-end justify-between gap-4 border-b-4 border-ink pb-6">
-          <h2 className="font-display text-4xl font-bold uppercase leading-none tracking-tighter sm:text-6xl">
+          <h2 className="misprint font-display text-4xl font-bold uppercase leading-none tracking-tighter sm:text-6xl">
             Featured
             <br />
             Gear

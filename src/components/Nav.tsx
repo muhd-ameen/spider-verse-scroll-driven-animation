@@ -10,7 +10,7 @@ export default function Nav() {
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4">
         <a
           href="#"
-          className="font-display text-2xl font-bold uppercase tracking-tighter focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-spider focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+          className="misprint font-display text-2xl font-bold uppercase tracking-tighter focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-spider focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
         >
           Spider<span className="text-spider">//</span>Verse
         </a>

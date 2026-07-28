@@ -84,7 +84,7 @@ export default function HeroSequence({
             isReady ? "pointer-events-none opacity-0" : "opacity-100"
           }`}
         >
-          <span className="font-display text-5xl font-bold uppercase tracking-tighter text-paper">
+          <span className="misprint font-display text-5xl font-bold uppercase tracking-tighter text-paper">
             Spider<span className="text-spider">//</span>Verse
           </span>
           <div className="h-2 w-56 overflow-hidden border-2 border-paper">

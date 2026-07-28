@@ -5,6 +5,7 @@ import HeroSequence from "@/components/HeroSequence";
 import ProductGrid from "@/components/ProductGrid";
 import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
+import MultiverseShift from "@/components/MultiverseShift";
 
 export default function Home() {
   return (
@@ -16,6 +17,8 @@ export default function Home() {
       <ProductGrid />
       <CTA />
       <Footer />
+      {/* Retints the whole page as the CTA scrolls into view. */}
+      <MultiverseShift triggerSelector="#crossing" />
     </main>
   );
 }

@@ -26,7 +26,15 @@ export interface ScrollSequenceOptions {
   scrub?: number | boolean;
   /** How the frame fills the canvas. Default "cover". */
   fit?: "cover" | "contain";
+  /** Scroll speed (px/s) at which the RGB split maxes out. Default 2600. */
+  aberrationVelocity?: number;
 }
+
+/** Isolates one channel when multiplied over the frame. R, G, B in order. */
+const CHANNEL_PLATES = ["#ff0000", "#00ff00", "#0000ff"];
+
+/** Below this the split is invisible, so take the cheap single-draw path. */
+const MIN_VISIBLE_SHIFT = 0.6;
 
 /**
  * Drives a scroll-scrubbed canvas image sequence with GSAP ScrollTrigger.
@@ -51,6 +59,7 @@ export function useScrollSequence({
   isReady,
   scrub = 0.6,
   fit = "cover",
+  aberrationVelocity = 2600,
 }: ScrollSequenceOptions): void {
   // Lets the "draw the first frame once it's ready" effect reach into the
   // live drawing closure created by the setup effect below.
@@ -74,6 +83,17 @@ export function useScrollSequence({
     let cssHeight = 0;
     let resizeRaf = 0;
 
+    // Scroll speed, normalised 0..1, eased toward the target and decaying to
+    // rest so the split settles the moment you stop scrubbing.
+    let aberration = 0;
+    let aberrationTarget = 0;
+    let drawnAberration = -1;
+
+    // Scratch buffer for the channel-separation pass. Allocated once and
+    // resized with the canvas; only touched while the split is visible.
+    const buffer = document.createElement("canvas");
+    const bufferCtx = buffer.getContext("2d", { alpha: false });
+
     const drawFrame = (index: number) => {
       const img = images.current[index];
       if (!img || !img.complete || img.naturalWidth === 0) return;
@@ -90,22 +110,50 @@ export function useScrollSequence({
       const dy = (cssHeight - drawH) / 2;
 
       ctx.clearRect(0, 0, cssWidth, cssHeight);
-      ctx.drawImage(img, dx, dy, drawW, drawH);
+
+      // Split scales with the viewport so it reads the same on any screen.
+      const shift = aberration * Math.min(cssWidth * 0.014, 20);
+      if (shift < MIN_VISIBLE_SHIFT || !bufferCtx) {
+        ctx.globalCompositeOperation = "source-over";
+        ctx.drawImage(img, dx, dy, drawW, drawH);
+        return;
+      }
+
+      // Separate the frame into R/G/B plates, then re-register them additively
+      // a few pixels apart. `lighter` sums to the original when shift is 0, so
+      // the effect fades out cleanly instead of popping.
+      ctx.globalCompositeOperation = "lighter";
+      for (let plate = 0; plate < 3; plate++) {
+        // `copy` wipes the buffer and redraws in one op, so no clearRect.
+        bufferCtx.globalCompositeOperation = "copy";
+        bufferCtx.drawImage(img, dx, dy, drawW, drawH);
+        bufferCtx.globalCompositeOperation = "multiply";
+        bufferCtx.fillStyle = CHANNEL_PLATES[plate];
+        bufferCtx.fillRect(0, 0, cssWidth, cssHeight);
+
+        // Red drifts one way, blue the other, green holds the centre. The
+        // slight vertical skew keeps it from looking like a clean CSS offset.
+        const offset = (1 - plate) * shift;
+        ctx.drawImage(buffer, offset, offset * -0.18, cssWidth, cssHeight);
+      }
+      ctx.globalCompositeOperation = "source-over";
     };
 
-    // Called on every scrubbed tick; skips work when the frame is unchanged.
+    // Called on every scrubbed tick; skips work when nothing visible changed.
     const render = () => {
       const index = Math.min(
         totalFrames - 1,
         Math.max(0, Math.round(playhead.frame)),
       );
-      if (index === currentFrame) return;
+      if (index === currentFrame && aberration === drawnAberration) return;
       currentFrame = index;
+      drawnAberration = aberration;
       drawFrame(index);
     };
 
     const forceRedraw = () => {
       currentFrame = -1;
+      drawnAberration = -1;
       render();
     };
     redrawRef.current = forceRedraw;
@@ -119,6 +167,9 @@ export function useScrollSequence({
       canvas.width = Math.round(cssWidth * dpr);
       canvas.height = Math.round(cssHeight * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      buffer.width = canvas.width;
+      buffer.height = canvas.height;
+      bufferCtx?.setTransform(dpr, 0, 0, dpr, 0, 0);
       forceRedraw();
     };
 
@@ -154,6 +205,12 @@ export function useScrollSequence({
           end: "bottom top",
           scrub,
           invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            aberrationTarget = Math.min(
+              1,
+              Math.abs(self.getVelocity()) / aberrationVelocity,
+            );
+          },
         },
       });
 
@@ -178,15 +235,27 @@ export function useScrollSequence({
       );
     }, canvasLayer);
 
+    // ScrollTrigger only reports velocity while the scroll position changes,
+    // so the split has to be relaxed on its own clock — otherwise it freezes
+    // at whatever value it held when the user stopped.
+    const relax = () => {
+      aberrationTarget *= 0.9;
+      aberration += (aberrationTarget - aberration) * 0.18;
+      if (aberration < 0.004) aberration = 0;
+      if (Math.abs(aberration - drawnAberration) > 0.008) render();
+    };
+    if (!prefersReducedMotion) gsap.ticker.add(relax);
+
     return () => {
       cancelAnimationFrame(resizeRaf);
       observer.disconnect();
+      gsap.ticker.remove(relax);
       redrawRef.current = null;
       gsapCtx.revert();
     };
     // Refs are stable; primitive options are the only meaningful inputs.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [totalFrames, scrub, fit]);
+  }, [totalFrames, scrub, fit, aberrationVelocity]);
 
   // Paint the opening frame the instant the first image finishes decoding.
   useEffect(() => {
